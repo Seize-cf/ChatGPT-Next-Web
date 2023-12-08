@@ -2,15 +2,14 @@ import fetch from "node-fetch";
 import fs from "fs/promises";
 
 const RAW_FILE_URL = "https://raw.githubusercontent.com/";
-const MIRRORF_FILE_URL = "http://raw.fgit.ml/";
+const MIRROR_FILE_URL = "http://raw.fgit.ml/";
 
 const RAW_CN_URL = "PlexPt/awesome-chatgpt-prompts-zh/main/prompts-zh.json";
-const CN_URL = MIRRORF_FILE_URL + RAW_CN_URL;
+const CN_URL = RAW_FILE_URL + RAW_CN_URL;
 const RAW_EN_URL = "f/awesome-chatgpt-prompts/main/prompts.csv";
-const EN_URL = MIRRORF_FILE_URL + RAW_EN_URL;
+const EN_URL = RAW_FILE_URL + RAW_EN_URL;
 const FILE = "./public/prompts.json";
 
-const ignoreWords = ["涩涩", "魅魔"];
 
 const timeoutPromise = (timeout) => {
   return new Promise((resolve, reject) => {
@@ -30,8 +29,7 @@ async function fetchCN() {
       .filter(
         (v) =>
           v[0] &&
-          v[1] &&
-          ignoreWords.every((w) => !v[0].includes(w) && !v[1].includes(w)),
+          v[1]
       );
   } catch (error) {
     console.error("[Fetch] failed to fetch cn prompts", error);
