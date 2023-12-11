@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import styles from "./settings.module.scss";
 
@@ -35,30 +35,32 @@ import { ModelConfigList } from "./model-config";
 import { IconButton } from "./button";
 import {
   SubmitKey,
-  useChatStore,
   Theme,
-  useUpdateStore,
   useAccessStore,
   useAppConfig,
+  useChatStore,
+  useUpdateStore,
 } from "../store";
 
 import Locale, {
-  AllLangs,
   ALL_LANG_OPTIONS,
+  AllLangs,
   changeLang,
   getLang,
 } from "../locales";
 import { copyToClipboard } from "../utils";
 import Link from "next/link";
 import {
+  AI_PROXY_BASE_URL,
+  AI_PROXY_VIP_BASE_URL,
   Azure,
   Google,
   OPENAI_BASE_URL,
   Path,
   RELEASE_URL,
-  STORAGE_KEY,
   ServiceProvider,
   SlotID,
+  STORAGE_KEY,
   UPDATE_URL,
 } from "../constant";
 import { Prompt, SearchService, usePromptStore } from "../store/prompt";
@@ -583,11 +585,14 @@ export function Settings() {
 
   const accessStore = useAccessStore();
   const shouldHideBalanceQuery = useMemo(() => {
-    const isOpenAiUrl = accessStore.openaiUrl.includes(OPENAI_BASE_URL);
-
+    const isOpenAiOrProxyUrl = [
+      OPENAI_BASE_URL,
+      AI_PROXY_VIP_BASE_URL,
+      AI_PROXY_BASE_URL,
+    ].some((url) => accessStore.openaiUrl.includes(url));
     return (
+      isOpenAiOrProxyUrl ||
       accessStore.hideBalanceQuery ||
-      isOpenAiUrl ||
       accessStore.provider === ServiceProvider.Azure
     );
   }, [
