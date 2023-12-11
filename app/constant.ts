@@ -13,6 +13,9 @@ export const OPENAI_BASE_URL = "https://api.openai.com";
 
 export const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/";
 
+export const AI_PROXY_BASE_URL = "https://api.aiproxy.io";
+export const AI_PROXY_VIP_BASE_URL = "https://apivip.aiproxy.io";
+
 export enum Path {
   Home = "/",
   Chat = "/chat",
