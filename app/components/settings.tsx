@@ -698,7 +698,9 @@ export function Settings() {
             >
               <div
                 className={styles.avatar}
-                onClick={() => setShowEmojiPicker(true)}
+                onClick={() => {
+                  setShowEmojiPicker(!showEmojiPicker);
+                }}
               >
                 <Avatar avatar={config.avatar} />
               </div>
